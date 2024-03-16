@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job application Form</title>
+    <style>
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 250px;
+        }
+
+        .error {
+            color: red;
+            display: none;
+        }
+
+        .error.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Job application Form</h1>
+
+<form id="myForm">
+    <div>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <span class="error" id="nameError">Please enter your name</span>
+    </div>
+    <div>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <span class="error" id="emailError">Please enter a valid email</span>
+    </div>
+    <div>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <span class="error" id="passwordError">Please enter a password (min. 8 characters)</span>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+<script>
+    const form = document.getElementById('myForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    form.addEventListener('submit', function(event) {
+        let isValid = true;
+
+        if (nameInput.value.trim() === '') {
+            nameError.classList.add('active');
+            isValid = false;
+        } else {
+            nameError.classList.remove('active');
+        }
+
+        if (!isValidEmail(emailInput.value.trim())) {
+            emailError.classList.add('active');
+            isValid = false;
+        } else {
+            emailError.classList.remove('active');
+        }
+
+        if (passwordInput.value.length < 8) {
+            passwordError.classList.add('active');
+            isValid = false;
+        } else {
+            passwordError.classList.remove('active');
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+
+    function isValidEmail(email) {
+        // Very basic email validation
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+</script>
+
+</body>
+</html>
